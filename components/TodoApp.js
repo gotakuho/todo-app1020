@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -25,12 +26,20 @@ export default function TodoApp() {
   }, [todos])
 
   function addTodo(text) {
-    const newTodo = { id: crypto.randomUUID(), text, done: false }
+    const newTodo = {
+      id: crypto.randomUUID(),
+      text,
+      done: false,
+    }
     setTodos([...todos, newTodo])
   }
 
   function toggleTodo(id) {
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo)))
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    )
   }
 
   function deleteTodo(id) {
@@ -46,18 +55,28 @@ export default function TodoApp() {
   const remaining = todos.length - doneCount
 
   const visibleTodos =
-    filter === 'active' ? todos.filter((todo) => !todo.done) : filter === 'done' ? todos.filter((todo) => todo.done) : todos
+    filter === 'active'
+      ? todos.filter((todo) => !todo.done)
+      : filter === 'done'
+        ? todos.filter((todo) => todo.done)
+        : todos
 
   return (
     <div>
       <TodoForm onAdd={addTodo} />
+
       <TodoFilter value={filter} onChange={setFilter} />
-      <TodoList todos={visibleTodos} onToggle={toggleTodo} onDelete={deleteTodo} />
-      {todos.length > 0 && (
-        <p>
-          全 {todos.length} 件 / 完了 {doneCount} 件 / 残り {remaining} 件
-        </p>
-      )}
+
+      <TodoList
+        todos={visibleTodos}
+        onToggle={toggleTodo}
+        onDelete={deleteTodo}
+      />
+
+      <p style={{ color: 'gray' }}>
+        全 {todos.length} 件 / 完了 {doneCount} 件 / 残り {remaining} 件
+      </p>
+
       <button onClick={clearDone} disabled={doneCount === 0}>
         完了済みを削除
       </button>
