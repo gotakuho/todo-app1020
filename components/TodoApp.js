@@ -73,7 +73,7 @@ export default function TodoApp() {
         onDelete={deleteTodo}
       />
 
-      <p>
+      <p style={{ color: 'gray' }}>
         全 {todos.length} 件 / 完了 {doneCount} 件 / 残り {remaining} 件
       </p>
 
